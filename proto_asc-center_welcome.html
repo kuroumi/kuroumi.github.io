@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  html,body{margin:0;padding:0;background:#ffffff;color:#18181b;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+  a{color:#18181b;text-decoration:none;}
+  a:hover{color:#52525b;text-decoration:underline;}
+  button{font-family:inherit;}
+  @keyframes drawerin{from{transform:translateX(40px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+</style>
+</helmet>
+<main style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 40px;box-sizing:border-box;">
+  <h1 style="font-size:26px;font-weight:600;letter-spacing:-0.02em;margin:0;">{{ greeting }}</h1>
+  <div style="display:flex;align-items:stretch;margin-top:44px;">
+    <sc-for list="{{ stats }}" as="st" hint-placeholder-count="3">
+      <button onClick="{{ st.onClick }}" style="{{ st.style }}" style-hover="background:#fafafa;">
+        <span style="display:flex;align-items:center;gap:8px;">
+          <span style="display:flex;color:#71717a;" dangerouslySetInnerHTML="{{ st.icon }}"></span>
+          <span style="font-size:26px;font-weight:600;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;color:#18181b;">{{ st.value }}</span>
+        </span>
+        <span style="font-size:13px;color:#71717a;margin-top:4px;">{{ st.label }}</span>
+      </button>
+    </sc-for>
+  </div>
+  <div style="margin-top:56px;width:100%;max-width:520px;">
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:#a1a1aa;text-align:center;margin-bottom:14px;">Latest updates</div>
+    <div style="display:flex;flex-direction:column;">
+      <sc-for list="{{ updates }}" as="u" hint-placeholder-count="3">
+        <div style="display:flex;align-items:baseline;gap:10px;padding:10px 4px;border-bottom:1px solid #f1f1f3;">
+          <span style="width:5px;height:5px;border-radius:50%;background:#2563eb;flex-shrink:0;position:relative;top:-2px;"></span>
+          <span style="flex:1;min-width:0;font-size:13.5px;color:#3f3f46;line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ u.text }}</span>
+          <span style="font-size:12px;color:#a1a1aa;flex-shrink:0;">{{ u.time }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="text-align:center;margin-top:16px;">
+      <a href="#" style="font-size:12.5px;color:#71717a;">See all updates</a>
+    </div>
+  </div>
+</main>
+<sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ onCloseDrawer }}" style="position:fixed;inset:0;background:rgba(24,24,27,0.18);z-index:40;"></div>
+  <aside style="position:fixed;top:0;right:0;bottom:0;width:min(1060px,94vw);background:#ffffff;border-left:1px solid #e4e4e7;box-shadow:-12px 0 32px rgba(0,0,0,0.08);z-index:50;display:flex;flex-direction:column;animation:drawerin 0.18s ease-out;box-sizing:border-box;">
+    <div style="display:flex;justify-content:flex-end;padding:12px 16px 0;">
+      <button onClick="{{ onCloseDrawer }}" style="background:none;border:none;cursor:pointer;color:#a1a1aa;padding:6px;border-radius:6px;display:flex;" style-hover="background:#f4f4f5;color:#3f3f46;">
+        <svg width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
+      </button>
+    </div>
+    <div style="flex:1;overflow-y:auto;">
+      <dc-import name="NotificationsView" hint-size="100%,100%" style="display:block;width:100%;"></dc-import>
+    </div>
+  </aside>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1280, &quot;height&quot;: 800}, &quot;userName&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Emily&quot;, &quot;tsType&quot;: &quot;string&quot;}, &quot;tasks&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 15, &quot;tsType&quot;: &quot;number&quot;}, &quot;assigned&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 71, &quot;tsType&quot;: &quot;number&quot;}, &quot;newToday&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 326, &quot;tsType&quot;: &quot;number&quot;}}">
+class Component extends DCLogic {
+  state = { drawerOpen: false };
+  renderVals() {
+    const icons = {
+      bell: '<svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M8 1.8a4 4 0 00-4 4c0 3.2-1.3 4.4-1.3 4.4h10.6S12 9 12 5.8a4 4 0 00-4-4z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.2 13a1.4 1.4 0 01-2.4 0" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>',
+      folder: '<svg width="17" height="17" viewBox="0 0 16 16" fill="none"><path d="M1.8 3.5A1.5 1.5 0 013.3 2h3l1.5 2h4.9a1.5 1.5 0 011.5 1.5v7A1.5 1.5 0 0112.7 14H3.3a1.5 1.5 0 01-1.5-1.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>',
+      plus: '<svg width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.2" stroke="currentColor" stroke-width="1.3"/><path d="M8 5.4v5.2M5.4 8h5.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>'
+    };
+    const defs = [
+      { value: (this.props.tasks ?? 15), label: 'Tasks', icon: icons.bell },
+      { value: (this.props.assigned ?? 71), label: 'Assigned', icon: icons.folder },
+      { value: (this.props.newToday ?? 326), label: 'New today', icon: icons.plus }
+    ];
+    const stats = defs.map((d, i) => ({ ...d,
+      icon: { __html: d.icon },
+      style: 'display:flex;flex-direction:column;align-items:center;background:none;border:none;cursor:pointer;padding:14px 40px;border-radius:10px;' + (i > 0 ? 'border-left:1px solid #e4e4e7;border-radius:0 10px 10px 0;' : ''),
+      onClick: () => this.setState({ drawerOpen: true })
+    }));
+    const updates = [
+      { text: 'Morning digest \u2014 14 cases assigned to you via round robin yesterday', time: '7:00 AM' },
+      { text: 'Availity portal healed automatically \u2014 submissions are flowing again', time: '8:12 AM' },
+      { text: '3 cases auto-marked No auth required by code check', time: '7:45 AM' }
+    ];
+    return { greeting: 'Welcome back, ' + (this.props.userName ?? 'Emily'), stats, updates,
+      drawerOpen: this.state.drawerOpen,
+      onCloseDrawer: () => this.setState({ drawerOpen: false }) };
+  }
+}
+</script>
+</body>
+</html>
