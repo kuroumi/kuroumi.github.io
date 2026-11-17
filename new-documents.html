@@ -1081,6 +1081,27 @@ button.rqf{border:1px solid var(--g2);background:#fff;border-radius:4px;padding:
 .hp-pgw .pg{position:absolute;box-shadow:none;transition:none}
 .hp-m{margin-top:8px}.hp-n{font-size:12px;font-weight:500;color:#343a40;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hp-s{font-size:11px;color:#868e96;margin-top:1px}
 .prv-eye{width:24px;height:24px;color:#495057}
+/* ---- 2.7 ---- */
+#sec-att .cb.flush{overflow:visible}
+.prbar-r{display:flex;align-items:center;gap:12px}
+.attc{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:0;background:none;border-radius:8px;font-size:13px;color:#495057;cursor:pointer}
+.attc:hover{background:#f1f3f5;color:#343a40}.attc b{font-weight:600;color:#343a40}.attc svg{color:#868e96}
+.srch-w{position:relative}
+.srch{width:260px;transition:border-color .15s,box-shadow .15s}
+.srch:focus-within,.srch.on{border-color:#228be6;box-shadow:0 0 0 3px rgba(34,139,230,.12)}
+.srch-x{border:0;background:none;color:#adb5bd;display:inline-flex;padding:0 8px;cursor:pointer}.srch-x:hover{color:#495057}
+.esr{position:absolute;left:0;top:calc(100% + 6px);width:520px;z-index:30;background:#fff;border:1px solid var(--g1);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.05),0 20px 25px -5px rgba(0,0,0,.1),0 10px 10px -5px rgba(0,0,0,.04);overflow:hidden;transform-origin:top left}
+.esr.enter{animation:ghIn .22s cubic-bezier(.22,1,.36,1) both}.esr.leave{animation:ghOut .14s ease-in both}
+.esr-h{display:flex;justify-content:space-between;padding:8px 12px;font-size:11.5px;color:#868e96;border-bottom:1px solid var(--g1);background:#f8f9fa}
+.esr-st{display:flex;align-items:center;gap:8px;padding:16px 12px;font-size:13px;color:#868e96}
+.esr-r{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid #f8f9fa}
+.esr-r.hi,.esr-r:hover{background:#f8f9fa}
+.esr-m{flex:1;min-width:0;display:flex;flex-direction:column}
+.esr-n{font-size:13px;color:#343a40;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.esr-n mark{background:#fff3bf;color:inherit;border-radius:2px;padding:0 1px}
+.esr-s{font-size:11.5px;color:#868e96}
+.esr-ok{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#0ca678;padding:0 6px}
+.esr-r .btn.xs{height:24px;padding:0 8px;border-radius:5px;font-size:12px;gap:4px}
+.esr-f{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;font-size:11px;color:#adb5bd;background:#fff}
 
 </style>
 </head>
@@ -3309,7 +3330,7 @@ function activityPanel(){
 
 /* 4 — Review an auto-attached document: Accept or Detach */
 function prReviewBtns(f){return `<span class="prv"><button class="btn xs" data-a="docDetach" data-v="${f.no}">Detach</button><button class="btn xs dark" data-a="docAccept" data-v="${f.no}">Accept</button></span>`}
-function attachments(){
+function attachments6(){
  let h=attachments4();
  return h.replace(/<button class="btn xs" data-a="docReview" data-v="(\d+)">Review<\/button>/g,(m,n)=>prReviewBtns(S.files.find(x=>x.no==n)));
 }
@@ -3379,6 +3400,65 @@ A.vwDetach=v=>{A.docDetach(v)};
 })();
 /* eye button next to Detach / Accept */
 function prReviewBtns(f){return `<span class="prv"><button class="iconbtn prv-eye" data-a="preview" data-v="${f.no}" data-tip="Preview">${ic('eye',16)}</button><button class="btn xs" data-a="docDetach" data-v="${f.no}">Detach</button><button class="btn xs dark" data-a="docAccept" data-v="${f.no}">Accept</button></span>`}
+
+/* ================= 2.7: attached count + Search Epic ================= */
+const EPIC_EXTRA={
+ nw:[{n:'Nursing flowsheet 11-16.pdf',cat:'Nursing note',d:'Nov 16, 2026 at 6:00 AM',s:'212 KB',t:'pdf'},{n:'Case management note 11-15.pdf',cat:'Case management',d:'Nov 15, 2026 at 5:10 PM',s:'64 KB',t:'pdf'},{n:'Operative report — ORIF right hip.pdf',cat:'Operative note',d:'Nov 14, 2026 at 1:05 PM',s:'188 KB',t:'pdf'},{n:'Labs — CBC, BMP 11-16.pdf',cat:'Lab results',d:'Nov 16, 2026 at 5:40 AM',s:'41 KB',t:'pdf'}],
+ st:[{n:'Echo report 2025.pdf',cat:'Prior imaging',d:'Sep 30, 2025 at 4:15 PM',s:'1.4 MB',t:'pdf'},{n:'Stress test 08-2025.pdf',cat:'Prior testing',d:'Aug 21, 2025 at 9:30 AM',s:'620 KB',t:'pdf'},{n:'Cardiology consult 06-2025.pdf',cat:'Visit note',d:'Jun 12, 2025 at 2:00 PM',s:'98 KB',t:'pdf'},{n:'Medication reconciliation 11-04.pdf',cat:'Medications',d:'Nov 4, 2026 at 10:55 AM',s:'37 KB',t:'pdf'}]};
+function epicResults(){
+ const q=(S.epicQ||'').toLowerCase().trim();if(!q)return [];
+ const have=new Set(S.files.map(f=>f.n));
+ const pool=[...S.files.filter(f=>f.src==='Epic'),...EPIC_EXTRA[T.scn].filter(x=>!have.has(x.n)).map((x,i)=>({...x,src:'Epic',no:'e'+i,extra:1}))];
+ const words=q.split(/\s+/);
+ return pool.filter(f=>words.every(w=>(f.n+' '+(f.cat||'')).toLowerCase().includes(w))).slice(0,6);
+}
+const hlq=(s,q)=>{if(!q)return esc(s);const re=new RegExp('('+q.trim().split(/\s+/).map(w=>w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+')','gi');return esc(s).replace(re,'<mark>$1</mark>')};
+function epicDrop(){
+ if(!S.epicOpen||!(S.epicQ||'').trim())return '';
+ const res=epicResults(),q=S.epicQ;
+ let body;
+ if(S.epicLoading)body=`<div class="esr-st">${spin(14)} Searching Epic for ${esc(SC().p.name)}…</div>`;
+ else if(!res.length)body=`<div class="esr-st">No Epic documents match “${esc(q)}”.</div>`;
+ else body=res.map((f,i)=>`<div class="esr-r ${i===(S.epicI||0)?'hi':''}" data-e="er-${f.no}">
+   <span class="dp2-ic">${TH[f.t]||TH.pdf}</span><span class="esr-m"><span class="esr-n">${hlq(f.n,q)}</span><span class="esr-s">${esc(f.cat||'')} · ${esc((f.d||'').replace(/ at .*/,''))} · ${f.s||''}</span></span>
+   ${f.extra?'':`<button class="iconbtn" data-a="preview" data-v="${f.no}" data-tip="Preview">${ic('eye',16)}</button>`}
+   ${f.att?`<span class="esr-ok">${ic('check',14)} Attached</span>`:`<button class="btn xs" data-a="epicAttach" data-v="${f.no}">${S.epicAdding===String(f.no)?spin(12):ic('plus',12)} Attach</button>`}</div>`).join('');
+ return `<div class="esr" data-x="esr"><div class="esr-h"><span>Epic · ${esc(SC().p.name)} · MRN ${SC().p.mrn}</span>${res.length&&!S.epicLoading?`<span>${res.length} result${res.length>1?'s':''}</span>`:''}</div>${body}
+  <div class="esr-f"><span>↑↓ to move · Enter to attach · Esc to close</span><button class="link sm" data-a="browse">Open all documents</button></div></div>`;
+}
+function attachments(){
+ let h=attachments6();
+ const n=attachedFiles().length;
+ const right=`<div class="prbar-r"><button class="attc" data-a="browse" data-tip="See what’s attached to this case">${ic('docs',16)}<span><b>${n}</b> document${n===1?'':'s'} attached</span></button>`;
+ h=h.replace('<button class="btn up" data-a="upload"',right+'<button class="btn up" data-a="upload"');
+ h=h.replace(/(<button class="btn up" data-a="upload"[^>]*>[\s\S]*?Upload<\/button>)/,'$1</div>');
+ // Search Epic: own query + results dropdown
+ h=h.replace(/<div class="srch">([\s\S]*?)<input placeholder="Search Epic" data-k="fileQ" data-bind="fileQ" value="[^"]*" data-enter="browse">/,
+  `<div class="srch-w"><div class="srch ${S.epicOpen&&(S.epicQ||'').trim()?'on':''}">$1<input placeholder="Search Epic" data-k="epicQ" data-bind="epicQ" value="${esc(S.epicQ||'')}" autocomplete="off">${(S.epicQ||'')?`<button class="srch-x" data-a="epicClear">${ic('x',14)}</button>`:''}`);
+ h=h.replace(/(<div class="srch-w">[\s\S]*?<\/div>)(<button class="btn" data-a="browse">)/,`$1${epicDrop()}</div>$2`);
+ return h;
+}
+let epT;
+document.addEventListener('input',e=>{if(e.target.dataset?.bind!=='epicQ')return;S.epicOpen=true;S.epicI=0;S.epicLoading=true;clearTimeout(epT);epT=setTimeout(()=>{S.epicLoading=false;render()},420)});
+document.addEventListener('focusin',e=>{if(e.target.dataset?.bind==='epicQ'&&(S.epicQ||'').trim()&&!S.epicOpen){S.epicOpen=true;render()}});
+document.addEventListener('mousedown',e=>{if(S.epicOpen&&!e.target.closest('.srch-w')){S.epicOpen=false;render()}});
+document.addEventListener('keydown',e=>{
+ if(e.target.dataset?.bind!=='epicQ'||!S.epicOpen)return;
+ const r=epicResults();
+ if(e.key==='ArrowDown'){e.preventDefault();S.epicI=Math.min((S.epicI||0)+1,r.length-1);render()}
+ else if(e.key==='ArrowUp'){e.preventDefault();S.epicI=Math.max((S.epicI||0)-1,0);render()}
+ else if(e.key==='Enter'){e.preventDefault();const f=r[S.epicI||0];if(f&&!f.att)A.epicAttach(String(f.no))}
+ else if(e.key==='Escape'){S.epicOpen=false;render()}
+});
+A.epicClear=()=>{S.epicQ='';S.epicOpen=false;setTimeout(()=>document.querySelector('[data-k="epicQ"]')?.focus(),20)};
+A.epicAttach=v=>{if(attLocked())return 'skip';
+ let f=S.files.find(x=>String(x.no)===String(v));
+ if(!f){const x=epicResults().find(r=>String(r.no)===String(v));if(!x)return;const no=Math.max(...S.files.map(z=>z.no))+1;f={n:x.n,cat:x.cat,d:x.d,s:x.s,t:x.t,src:'Epic',no,att:false,sel:false};S.files.push(f)}
+ S.epicAdding=String(v);
+ later(500,()=>{S.epicAdding=null;f.att=true;f.sel=true;f.user=1;S.dsel=null;
+  ev({icon:'docs',title:`Attached <b>${esc(f.cat||'document')}</b> from Epic search`,meta:`<span>${esc(f.n)} · searched “${esc(S.epicQ)}”</span>`});
+  toast(`Attached ${f.n}`,'docs');checkReady()});
+};
 
 render();startIngest();
 </script>
