@@ -1102,6 +1102,8 @@ button.rqf{border:1px solid var(--g2);background:#fff;border-radius:4px;padding:
 .esr-ok{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#0ca678;padding:0 6px}
 .esr-r .btn.xs{height:24px;padding:0 8px;border-radius:5px;font-size:12px;gap:4px}
 .esr-f{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;font-size:11px;color:#adb5bd;background:#fff}
+.prbar .btn.up{border-color:#dee2e6;border-radius:5px;padding:0 16px;color:#212529}
+.prbar-l .attc{margin-left:2px}
 
 </style>
 </head>
@@ -3429,13 +3431,15 @@ function epicDrop(){
 function attachments(){
  let h=attachments6();
  const n=attachedFiles().length;
- const right=`<div class="prbar-r"><button class="attc" data-a="browse" data-tip="See what’s attached to this case">${ic('docs',16)}<span><b>${n}</b> document${n===1?'':'s'} attached</span></button>`;
- h=h.replace('<button class="btn up" data-a="upload"',right+'<button class="btn up" data-a="upload"');
+ const cnt=`<button class="attc" data-a="browse" data-tip="See what’s attached to this case">${ic('docs',16)}<span><b>${n}</b> document${n===1?'':'s'} attached</span></button>`;
+ h=h.replace('<button class="btn" data-a="browse">Browse</button></div>',cnt+'</div>');
+ h=h.replace('<button class="btn up" data-a="upload"','<div class="prbar-r"><button class="btn" data-a="browse">Browse</button><button class="btn up" data-a="upload"');
+ h=h.replace(/data-a="reqFetch"/g,'data-tip="Asks automation to search Epic again and attach the document if it’s now available" data-a="reqFetch"');
  h=h.replace(/(<button class="btn up" data-a="upload"[^>]*>[\s\S]*?Upload<\/button>)/,'$1</div>');
  // Search Epic: own query + results dropdown
  h=h.replace(/<div class="srch">([\s\S]*?)<input placeholder="Search Epic" data-k="fileQ" data-bind="fileQ" value="[^"]*" data-enter="browse">/,
   `<div class="srch-w"><div class="srch ${S.epicOpen&&(S.epicQ||'').trim()?'on':''}">$1<input placeholder="Search Epic" data-k="epicQ" data-bind="epicQ" value="${esc(S.epicQ||'')}" autocomplete="off">${(S.epicQ||'')?`<button class="srch-x" data-a="epicClear">${ic('x',14)}</button>`:''}`);
- h=h.replace(/(<div class="srch-w">[\s\S]*?<\/div>)(<button class="btn" data-a="browse">)/,`$1${epicDrop()}</div>$2`);
+ h=h.replace(/(<div class="srch-w">[\s\S]*?<\/div>)(<button class="attc")/,`$1${epicDrop()}</div>$2`);
  return h;
 }
 let epT;
