@@ -1104,6 +1104,20 @@ button.rqf{border:1px solid var(--g2);background:#fff;border-radius:4px;padding:
 .esr-f{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;font-size:11px;color:#adb5bd;background:#fff}
 .prbar .btn.up{border-color:#dee2e6;border-radius:5px;padding:0 16px;color:#212529}
 .prbar-l .attc{margin-left:2px}
+/* ---- 2.8 compact dropzone ---- */
+.dp2-up{display:flex;flex-direction:column;gap:8px;flex:none}
+.dz.dzc{flex-direction:row;align-items:center;gap:14px;padding:12px 16px;border-radius:10px;text-align:left}
+.dzc .dz-ic{width:40px;height:34px;margin:0;flex:none}
+.dzc .dz-ic span{top:3px;left:9px;width:22px;height:27px;border-radius:5px}
+.dzc .dz-ic .c1{transform:rotate(-12deg) translateX(-6px)}.dzc .dz-ic .c2{transform:rotate(12deg) translateX(6px)}
+.dzc:hover .dz-ic .c1,.dzc.over .dz-ic .c1{transform:rotate(-18deg) translateX(-9px)}
+.dzc:hover .dz-ic .c2,.dzc.over .dz-ic .c2{transform:rotate(18deg) translateX(9px)}
+.dzc:hover .dz-ic .c3,.dzc.over .dz-ic .c3{transform:translateY(-2px)}
+.dzc-t{flex:1;min-width:0}.dzc .dz-t{font-size:13px;line-height:18px}.dzc .dz-d{font-size:11.5px;line-height:16px}
+.dzc-a{display:flex;align-items:center;gap:12px;flex:none}
+.dzc .dz-b{margin:0}.dzc .dz-s{margin:0}
+.panel.dp2 .uq{margin:0}
+.dzc .dz-s{text-decoration:none!important}
 
 </style>
 </head>
@@ -3100,7 +3114,7 @@ A.browse=()=>{S.panel='docs';S.dsel=null};
 
 /* ---- Documents drawer (Figma 91:30162) ---- */
 const dsel=()=>S.dsel||(S.dsel=new Set(S.files.filter(f=>f.att).map(f=>f.no)));
-function docsPanel(){
+function docsPanel4(){
  const sel=dsel(),q=(S.fileQ||'').toLowerCase().trim(),src=S.attSrc||[],locked=attLocked();
  let files=S.files.filter(f=>(!q||f.n.toLowerCase().includes(q)||(f.cat||'').toLowerCase().includes(q))&&(!src.length||src.includes(f.src)));
  const k=S.attSort?.k||'n',d=S.attSort?.d||1;files=[...files].sort((a,b)=>{const A_=k==='d'?Date.parse(a.d)||0:String(a[k]||'').toLowerCase(),B_=k==='d'?Date.parse(b.d)||0:String(b[k]||'').toLowerCase();return (A_>B_?1:A_<B_?-1:0)*d});
@@ -3463,6 +3477,23 @@ A.epicAttach=v=>{if(attLocked())return 'skip';
   ev({icon:'docs',title:`Attached <b>${esc(f.cat||'document')}</b> from Epic search`,meta:`<span>${esc(f.n)} · searched “${esc(S.epicQ)}”</span>`});
   toast(`Attached ${f.n}`,'docs');checkReady()});
 };
+
+/* ================= 2.8: compact File Upload in the Documents drawer ================= */
+function dropzoneC(){
+ return `<div class="dz dzc ${S.dzOver?'over':''}" data-a="dzBrowse" data-dz="1">
+  <div class="dz-ic"><span class="c1"></span><span class="c2"></span><span class="c3">${ic('fileUp',14)}</span></div>
+  <div class="dzc-t"><div class="dz-t">${S.dzOver?'Drop to add to this patient':'Click to upload or drop files'}</div><div class="dz-d">PDF, DOC/DOCX, XLSX, CSV, PNG, or JPG · up to 25 MB</div></div>
+  <div class="dzc-a"><button class="link sm dz-s" data-a="dzSample">Add sample</button><span class="dz-b">${ic('upload',14)} Browse files</span></div></div>`;
+}
+function docsPanel(){
+ S.files.forEach(f=>{if(f.src==='Manual Upload'&&!f.cat)f.cat='Uploaded';if(f.sel&&!f.att&&!f._ds){f._ds=1;dsel().add(f.no)}});
+ let h=docsPanel4();const q=uploadQueue();
+ if(q)h=h.replace(q,'');
+ return h.replace('<div class="dp2-w">',`<div class="dp2-up">${dropzoneC()}${q}</div><div class="dp2-w">`);
+}
+const SMP={nw:[['pt_eval_signed_11-16.pdf',1.2e6,'application/pdf'],['bayview_acceptance_letter.docx',3.9e5,'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],['family_contact_sheet.png',2.2e5,'image/png'],['discharge_summary_draft.zip',4.1e6,'application/zip']],
+ st:[['lipid_panel_order_signed.pdf',6.4e5,'application/pdf'],['pcp_referral_dr_nair.pdf',2.8e5,'application/pdf'],['ekg_tracing_11-04.png',9.1e5,'image/png'],['visit_bundle.zip',5.2e6,'application/zip']]};
+{const _ds=A.dzSample;A.dzSample=(...a)=>{SAMPLES.splice(0,SAMPLES.length,...SMP[T.scn]);return _ds(...a)}}
 
 render();startIngest();
 </script>
