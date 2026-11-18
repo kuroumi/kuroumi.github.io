@@ -1119,6 +1119,67 @@ button.rqf{border:1px solid var(--g2);background:#fff;border-radius:4px;padding:
 .panel.dp2 .uq{margin:0}
 .dzc .dz-s{text-decoration:none!important}
 
+/* ---- 2.9 linked panes ---- */
+#sec-att .cb.flush{overflow:visible}
+.lk-bar{border-bottom:1px solid var(--g1);border-radius:0;padding:12px 16px}
+.lk{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.lk-l{padding:16px 20px 20px;border-right:1px solid var(--g1);min-width:0;display:flex;flex-direction:column;gap:20px}
+.lk-rp{padding:16px;min-width:0;background:#fcfcfd;border-radius:0 0 8px 0}
+.lk-g{display:flex;flex-direction:column;gap:2px}
+.lk-g+.lk-g{padding-top:18px;border-top:1px solid var(--g1)}
+.lk-h{display:flex;align-items:center;gap:6px;font-size:14px;line-height:20px;font-weight:500;color:#343a40;padding:0 0 8px}
+.lk-h.sm{padding-top:14px;font-size:13px}
+.lk-q{display:inline-flex;color:#adb5bd;cursor:help}.lk-q:hover{color:#495057}
+.lk-sum{background:#fff8ec;border-radius:5px;padding:8px 10px;margin:0 0 8px;font-size:12.5px;line-height:18px;color:#495057}
+.lk-row{display:flex;align-items:center;gap:8px;padding:6px 8px;min-height:36px;border-radius:5px;cursor:pointer;transition:background-color .18s ease}
+.lk-row:hover{background:#f8f9fa}
+.lk-row.lit{background:#f0f7ff}
+.lk-row .pri{display:inline-flex;width:16px;height:16px;flex:none}
+.lk-lab{flex:1;min-width:0;display:flex;align-items:center;flex-wrap:wrap;gap:3px;font-size:14px;line-height:20px;color:#343a40}
+.lk-sub{flex-basis:100%;font-size:12px;line-height:17px;color:#c92a2a}.lk-sub.dim{color:#868e96}
+.lk-row .btn.xs{height:24px;padding:0 8px 0 10px;border-radius:5px;font-size:12px}
+.lk-note{display:flex;align-items:center;gap:8px;background:#ebfbee;color:#2b8a3e;border-radius:5px;padding:8px 10px;font-size:12.5px;line-height:18px;margin-bottom:-6px}
+.lk-note b{font-weight:500}.lk-note .m{color:#5c940d}.lk-note span{flex:1}
+.lk-x{border:0;background:none;color:inherit;opacity:.6;display:inline-flex;padding:2px;border-radius:4px}.lk-x:hover{opacity:1}
+.lk-rh{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--dim);padding:0 2px 10px}.lk-rh b{font-size:14px;font-weight:500;color:#343a40}
+.lk-files{display:flex;flex-direction:column;gap:8px}
+.lk-files.scroll{max-height:640px;overflow-y:auto;padding-right:4px;margin-right:-4px}
+.lkc{border:1px solid var(--g2);border-radius:5px;background:#fff;padding:10px 12px 10px 8px;cursor:pointer;transition:border-color .18s ease,background-color .18s ease,box-shadow .18s ease}
+.lkc:hover{border-color:var(--g3)}
+.lkc.lit,.lkc.sel{background:#f0f7ff;border-color:#c5e0fc}
+.lkc-1{display:flex;align-items:center;gap:8px;min-height:24px}
+.lkc-g{display:inline-flex;color:#ced4da;cursor:grab}
+.lkc-n{flex:1;min-width:0;font-size:14px;font-weight:500;color:#343a40;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lkc-act{display:inline-flex;gap:2px;opacity:0;transition:opacity .15s ease}
+.lkc:hover .lkc-act,.lkc:focus-within .lkc-act{opacity:1}
+.lkc-act .ib{width:24px;height:24px;border:0;background:none;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;color:#495057;padding:0;cursor:pointer}
+.lkc-act .ib:hover{background:#e9ecef}
+.lkc-2{display:flex;align-items:center;gap:10px;margin:4px 0 0 22px;font-size:12px;line-height:18px;color:#868e96;white-space:nowrap}
+.lkc-2 .sp{flex:1}.lkc-2 .none{color:#e67700}
+.lkc-m{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.dpill.rev{background:#f3f0ff;color:#6741d9}
+
+.lk{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+.lkc:hover{border-color:#dee2e6!important;outline:none!important}
+.lkc.lit:hover,.lkc.sel:hover{border-color:#c5e0fc!important}
+.lkc,.lk-row{outline:none!important}
+.dpill.rev{background:#ede7fe!important;color:#6741d9}
+.lk-row{align-items:flex-start}
+.lk-row .pri{margin-top:2px}
+.lk-row>.btn,.lk-row>.prv{margin-top:-2px;flex:none}
+.lk-row .pri[data-tip]{cursor:help}
+.lkc-2{gap:6px;justify-content:flex-start}.lkc-2 i{font-style:normal;color:#ced4da}
+.lkc-m{flex:0 1 auto}
+.lkt{font-size:11px;line-height:16px;padding:0 6px;border-radius:4px;margin-left:4px;font-weight:500;white-space:nowrap}
+.lkt.auto{background:#e6fcf5;color:#0b7a55}.lkt.user{background:#f1f3f5;color:#495057}.lkt.rev{background:#f3f0ff;color:#6741d9}
+.prbar .btn.attc2{height:32px;padding:0 14px;border:1px solid #dee2e6;border-radius:5px;background:#fff;font-size:14px;color:#212529;gap:6px}
+.prbar .btn.attc2 svg{color:#868e96}
+.lkc-m{flex:none!important;overflow:visible!important;text-overflow:clip!important}.lkc-2{overflow:hidden;flex-wrap:nowrap}.lkc-2>span,.lkc-2>i{flex:none}
+.lkc-2{flex-wrap:wrap!important;row-gap:3px;overflow:visible}.lkt{margin-left:2px}.lk{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+.prbar .btn.attc2{height:32px;padding:0 10px;border:0!important;background:none!important;border-radius:5px;font-size:14px;color:#495057;gap:6px}.prbar .btn.attc2:hover{background:#f1f3f5!important;color:#343a40}
+.lk-row{min-height:0!important;padding:8px 8px!important}.lk-row>.btn,.lk-row>.prv{margin:-2px 0!important}
+.ctxg .card.ctxc .ch{height:auto;padding:6px 16px 14px;margin-bottom:0}.ctxg .card.ctxc .cb{padding-top:20px}.ctx-src{display:none!important}
+.dzc .dz-b{border:0!important;background:none!important;height:28px;padding:0 8px;border-radius:5px;color:#228be6;font-size:13px;font-weight:500;gap:5px}.dzc:hover .dz-b{background:#e7f5ff!important}.dzc .dz-s{color:#868e96!important}.dzc .dz-s:hover{color:#495057!important}
 </style>
 </head>
 <body>
@@ -3494,6 +3555,89 @@ function docsPanel(){
 const SMP={nw:[['pt_eval_signed_11-16.pdf',1.2e6,'application/pdf'],['bayview_acceptance_letter.docx',3.9e5,'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],['family_contact_sheet.png',2.2e5,'image/png'],['discharge_summary_draft.zip',4.1e6,'application/zip']],
  st:[['lipid_panel_order_signed.pdf',6.4e5,'application/pdf'],['pcp_referral_dr_nair.pdf',2.8e5,'application/pdf'],['ekg_tracing_11-04.png',9.1e5,'image/png'],['visit_bundle.zip',5.2e6,'application/zip']]};
 {const _ds=A.dzSample;A.dzSample=(...a)=>{SAMPLES.splice(0,SAMPLES.length,...SMP[T.scn]);return _ds(...a)}}
+
+/* ================= 2.9: linked panes in Payer Requirements ================= */
+const MNBY={
+ nw:[{id:'n1',label:'Needs daily skilled therapy or nursing (5+ days a week)',cats:['OT eval','PT eval']},
+  {id:'n2',label:'Functional decline — needs at least moderate assistance for transfers or walking',cats:['PT eval'],why:'Only a PT evaluation documents transfer and gait assistance.',fetch:'pt'},
+  {id:'n3',label:'Medically stable for SNF level of care',cats:['Progress notes']},
+  {id:'n4',label:'Needs can’t be met at a lower level of care',cats:['Discharge plan']}],
+ st:[{id:'m1',label:'Referral from the assigned PCP is on file',cats:['Referral'],hmo:1},
+  {id:'m2',label:'Visit note documents the reason for the cardiology follow-up',cats:['Visit note']},
+  {id:'m3',label:'Labs are ordered with CPT codes by the treating provider',cats:['Lab order']},
+  {id:'m4',label:'Recent lab results support repeat testing',cats:['Prior labs'],why:'Lab results from the last 12 months aren’t attached yet.',fetch:'pl'}]};
+const mnRules=()=>MNBY[T.scn].filter(r=>!(r.hmo&&T.plan==='PPO'));
+function ruleFiles(r){return S.files.filter(f=>f.att&&r.cats.includes(f.cat))}
+function ruleSt(r){const fs=ruleFiles(r);if(!fs.length)return 'missing';return fs.some(f=>f.rev!=='pending')?'met':'review'}
+function allRules(){return [...reqs().map(r=>({...r,g:'req'})),...mnRules().map(r=>({...r,g:'mn'}))]}
+const fileRules=no=>allRules().filter(r=>ruleFiles(r).some(f=>f.no==no));
+function lkIcon(st,opt,tip){const t=tip?` data-tip="${esc(tip)}"`:'';return st==='met'?`<span class="pri g">${ic('circleCheck',16)}</span>`:st==='review'?`<span class="pri">${LOADER_IC}</span>`:opt?`<span class="pri" style="color:#adb5bd"${t}>${ic('circle',16)}</span>`:`<span class="pri r"${t}>${ic('alertCircle',16)}</span>`}
+function lkRow(r){
+ const st=ruleSt(r),fs=ruleFiles(r),locked=attLocked(),sel=S.lnk;
+ const lit=sel==='r:'+r.id||(sel&&sel.startsWith('f:')&&fs.some(f=>'f:'+f.no===sel));
+ const badges=fs.map(f=>`<button class="prb ${f.rev==='pending'?'out':''}" data-a="preview" data-v="${f.no}" data-tip="${esc(f.n)}">${f.no}</button>`).join('');
+ let act='',sub='';
+ if(st==='missing'&&!locked){
+  const fid=r.g==='req'?r.id:r.fetch;const fr=fid&&reqs().find(x=>x.id===fid);
+  if(fr){const busy=(fr.epic&&S.nw?.checking)||S.fetchReq===fr.id;act=`<button class="btn xs" data-a="reqFetch" data-v="${fr.id}" data-tip="Asks automation to search Epic again and attach the document if it’s now available" ${busy?'disabled':''}>${busy?spin(12)+' Fetching…':'Fetch Now'}</button>`}
+ }
+ if(st==='review'&&!locked){const f=fs.find(x=>x.rev==='pending');act=prReviewBtns(f)}
+ return `<div class="lk-row ${lit?'lit':''}" data-a="lnk" data-v="r:${r.id}" data-e="lkr-${r.id}-${st}">${lkIcon(st,r.opt,st==='missing'?(r.why||(r.opt?'Optional — not attached yet':'No attached document covers this yet')):'')}<span class="lk-lab">${esc(r.label)}${badges}${sub}</span>${act}</div>`;
+}
+const qm=t=>`<span class="lk-q" data-tip="${esc(t)}">${ic('help',14)}</span>`;
+function lkLeft(){
+ const R=reqs(),req=R.filter(r=>!r.opt),adv=R.filter(r=>r.opt),M=mnRules();
+ const mnMiss=M.filter(r=>ruleSt(r)==='missing').length;
+ let h=lkNote();
+ h+=`<div class="lk-g"><div class="lk-h">Document Requirements ${qm(prGroupTitle())}</div>${req.map(r=>lkRow({...r,g:'req'})).join('')}
+  ${adv.length?`<div class="lk-h sm">Advisory</div>${adv.map(r=>lkRow({...r,g:'req'})).join('')}`:''}</div>`;
+ h+=`<div class="lk-g"><div class="lk-h">Medical Necessity ${qm(`${CRIT[T.scn].title} · ${CRIT[T.scn].src}`)}</div>
+  ${mnMiss&&!isPost()?`<div class="lk-sum">The patient appears to qualify, but ${mnMiss} criteri${mnMiss>1?'a':'on'} can’t be verified from the attached documents yet.</div>`:''}
+  ${M.map(r=>lkRow({...r,g:'mn'})).join('')}</div>`;
+ return h;
+}
+function lkPages(f){const m=/([\d.]+)\s*(KB|MB)/.exec(f.s||'');if(!m)return 1;const kb=+m[1]*(m[2]==='MB'?1024:1);return f.t==='png'||f.t==='jpg'?1:Math.max(1,Math.min(24,Math.round(kb/80)))}
+function lkRight(){
+ const fs=S.files.filter(f=>f.att),sel=S.lnk,rsel=sel&&sel.startsWith('r:')?allRules().find(r=>'r:'+r.id===sel):null,locked=attLocked();
+ const card=f=>{const rs=fileRules(f.no),n=lkPages(f),lit=rsel&&ruleFiles(rsel).some(x=>x.no===f.no);
+  const isAuto=f.auto||(!f.user&&f.src!=='Manual Upload');const tag=f.rev==='pending'?'<span class="lkt rev">Needs review</span>':`<span class="lkt ${isAuto?'auto':'user'}">${isAuto?'Auto Attached':'User Upload'}</span>`;
+  return `<div class="lkc ${sel==='f:'+f.no?'sel':''} ${lit?'lit':''}" data-a="lnk" data-v="f:${f.no}" data-e="lkc-${f.no}">
+   <div class="lkc-1"><span class="lkc-g">${ic('grip',14)}</span><span class="lkc-n">${f.no} · ${esc(f.n)}</span>
+    <span class="lkc-act"><button class="ib" data-a="preview" data-v="${f.no}" data-tip="Preview">${ic('eye',15)}</button>${locked?'':`<button class="ib" data-a="docDetach" data-v="${f.no}" data-tip="Detach from case">${ic('trash',15)}</button>`}</span></div>
+   <div class="lkc-2"><span>${esc((f.d||'').replace(/, \d{4}.*/,''))}</span><i>·</i><span>${esc(f.src)}</span><i>·</i><span class="lkc-m">${esc(f.cat||'Uploaded')}</span><i>·</i><span>${n} page${n>1?'s':''}</span><i>·</i><span class="${rs.length?'':'none'}">${rs.length?`${rs.length} rule${rs.length>1?'s':''}`:'Not used'}</span>${tag}</div></div>`};
+ return `<div class="lk-rh"><b>Attached documents</b><span>· ${fs.length}</span></div><div class="lk-files ${fs.length>10?'scroll':''}">${fs.map(card).join('')||'<div class="fempty sm">No documents attached yet.</div>'}</div>`;
+}
+function lkBar(){
+ const n=attachedFiles().length,locked=attLocked(),q=S.epicQ||'';
+ return `<div class="prbar lk-bar"><div class="prbar-l"><div class="srch-w"><div class="srch ${S.epicOpen&&q.trim()?'on':''}">${ic('search',16)}<input placeholder="Search Epic" data-k="epicQ" data-bind="epicQ" value="${esc(q)}" autocomplete="off">${q?`<button class="srch-x" data-a="epicClear">${ic('x',14)}</button>`:''}</div>${epicDrop()}</div>
+  <button class="btn attc2" data-a="browse" data-tip="See what’s attached to this case">${ic('docs',16)} ${n} attachment${n===1?'':'s'}</button></div>
+  <div class="prbar-r"><button class="btn" data-a="browse">Browse</button><button class="btn up" data-a="upload" ${locked?'disabled':''}>${ic('upload',16)} Upload</button></div></div>`;
+}
+/* re-check note when rule results change */
+function lkNote(){
+ const cur={};allRules().forEach(r=>cur[r.id]=ruleSt(r));
+ const key=T.scn+'|'+S.phase;
+ if(S._lkKey===key&&S._lkPrev){
+  const ch=Object.keys(cur).filter(k=>S._lkPrev[k]&&S._lkPrev[k]!==cur[k]);
+  if(ch.length){const lab=id=>allRules().find(r=>r.id===id).label.split(' (')[0].split(' —')[0];
+   const met=ch.filter(k=>cur[k]==='met'),rev=ch.filter(k=>cur[k]==='review'),lost=ch.filter(k=>cur[k]==='missing');
+   const p=[];if(met.length)p.push(`${met.length} now met`);if(rev.length)p.push(`${rev.length} ${rev.length>1?'have':'has'} evidence to review`);if(lost.length)p.push(`${lost.length} no longer supported`);
+   S._lkNote={t:p.join(' · '),d:ch.map(lab).slice(0,3).join(', ')+(ch.length>3?'…':'')};}
+ }
+ S._lkKey=key;S._lkPrev=cur;
+ if(!S._lkNote)return '';
+ return `<div class="lk-note" data-e="lknote-${S._lkNote.t}">${ic('refresh',14)}<span><b>Re-checked after documents changed.</b> ${esc(S._lkNote.t)} <span class="m">· ${esc(S._lkNote.d)}</span></span><button class="lk-x" data-a="lkDismiss">${ic('x',13)}</button></div>`;
+}
+A.lkDismiss=()=>{S._lkNote=null};
+A.lnk=v=>{S.lnk=S.lnk===v?null:v};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.lnk&&!S.modal&&!S.pop){S.lnk=null;render()}});
+function attachments(){return `${lkBar()}<div class="lk"><div class="lk-l">${lkLeft()}</div><div class="lk-rp">${lkRight()}</div></div>`}
+P.help='<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6"/><path d="M12 17h.01"/>';
+P.grip='<circle cx="9" cy="6" r="1"/><circle cx="15" cy="6" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="18" r="1"/>';
+P.circle=P.circle||'<circle cx="12" cy="12" r="9"/>';
+
+/* 2.10: context section titles */
+['nw','st'].forEach(k=>SECS[k].forEach(s=>{if(s.id==='cp')s.title='Referral Comments';if(s.id==='hist')s.title='Authorization Status Check'}));
 
 render();startIngest();
 </script>
