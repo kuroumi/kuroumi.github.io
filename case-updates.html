@@ -1200,6 +1200,12 @@ button.rqf{border:1px solid var(--g2);background:#fff;border-radius:4px;padding:
 .dock{margin:0!important;border:0!important;border-top:1px solid var(--g1)!important;border-radius:0!important;box-shadow:none!important;padding:10px 16px!important;flex:none;background:#fff}
 .pt-st{display:flex;align-items:center}
 .ph{justify-content:flex-start!important;gap:4px}
+.pv{display:flex;align-items:flex-start;gap:4px}.pv>span{min-width:0}
+.cpy{opacity:0;border:0;background:none;padding:2px;margin-top:1px;border-radius:4px;color:#868e96;display:inline-flex;cursor:pointer;flex:none;transition:opacity .15s ease}
+.pt div:hover>.pv .cpy,.pv:hover .cpy{opacity:1}.cpy:hover{background:#f1f3f5;color:#343a40}
+.pbar{padding:10px 8px 2px;cursor:pointer}
+.pbar-t{display:flex;justify-content:space-between;font-size:12px;line-height:18px;color:#495057;margin-bottom:6px}.pbar-t .m{color:#868e96}
+.pbar-tr{height:4px;border-radius:2px;background:#e9ecef;overflow:hidden}.pbar-tr i{display:block;height:100%;border-radius:2px;transition:width .5s cubic-bezier(.22,1,.36,1),background-color .3s}
 </style>
 </head>
 <body>
@@ -1525,7 +1531,7 @@ function left(){
  let h=`<aside class="left"><div class="leftscroll" data-sk="left">
   ${ptCard()}
   <div class="prog">
-   <div class="ph" data-a="toggle" data-v="progOpen"><span class="m" style="display:inline-flex">${ic(S.progOpen?'chevU':'chevD',16)}</span><span>Progress</span></div>`;
+   <div class="ph" data-a="toggle" data-v="progOpen"><span class="m" style="display:inline-flex">${ic(S.progOpen?'chevU':'chevD',16)}</span><span>Progress</span></div>${S.progOpen?'':progBar()}`;
  if(S.progOpen){
   h+=`<div class="steps">`;
   steps.forEach(s=>{
@@ -3660,7 +3666,7 @@ function lgLoad(){return '<span class="lgload"><i class="lgm"></i></span>'}
 /* 2.13: patient card layout + overlay additional details */
 function ptCard(){
  const P=SC().p,pay=PAYER(),parts=P.name.split(' '),fn=parts[0],ln=parts.slice(1).join(' ');
- const f=(l,v,cls='')=>`<div class="${cls}"><div class="lbl">${l}</div><div class="val">${v}</div></div>`;
+ const f=(l,v,cls='')=>{const plain=String(v).replace(/<[^>]+>/g,'').trim();return `<div class="${cls}"><div class="lbl">${l}</div><div class="val pv"><span>${v}</span><button class="cpy" data-a="copyVal" data-v="${esc(plain)}" data-tip="Copy ${esc(l.toLowerCase())}">${ic('copy2',14)}</button></div></div>`};
  const created=T.scn==='nw'?'11/16/2026':'11/03/2026';
  const more=S.addl?`<div class="pt-more" data-x="ptmore">${f('Age · Sex',`${P.age} · ${P.sex}`)}${f('Phone',P.phone)}${f('Address',P.addr,'span2')}${f('State',P.state)}${f('Source',P.ref)}${f('Voice AI',CALLAB[S.vc.callab]||'Callable')}${S.authNo?f('Authorization #',S.authNo):''}</div>`:'';
  return `<div class="pt pt2"><div class="pt-st">${statusChip()}</div>${f('Auth for',SC().authFor)}${f('First name',fn)}${f('Last name',ln)}${f('DOB',P.dob)}${f('MRN',P.mrn)}${f('Created date',created)}${f('Service date',SC().svcDate)}${f('Insurance plan',`${pay.name.replace(/ \((HMO|PPO)\)$/,'')} · ${pay.type}`)}${f('Member ID',esc(S.memberId))}
@@ -3682,6 +3688,23 @@ document.addEventListener('mousemove',e=>{
 document.addEventListener('mousedown',e=>{if(e.target.closest?.('.pop'))S._sbHover=false},true);
 
 {const _op=A.openPop;A.openPop=v=>{if(v==='submit'&&S.pop==='submit'&&S._sbHover){S._sbHover=false;clearTimeout(sbT);return}return _op(v)}}
+
+/* 2.15: copy on hover + collapsed progress bar */
+P.copy2='<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>';
+A.copyVal=v=>{try{navigator.clipboard&&navigator.clipboard.writeText(v).catch(()=>{})}catch(e){}toast(`Copied “${v}”`,'check');return 'skip'};
+function progBar(){
+ const p=S.phase,iss=issues();
+ let pct,col,label;
+ if(p==='ingesting'){pct=15;col='#ced4da';label='Preparing case details…'}
+ else if(S.archived){pct=100;col='#adb5bd';label='Archived'}
+ else if(S.resolution){pct=100;col='#0ca678';label=S.resolution.type==='noauth'?'No auth required':'Auth on file'}
+ else if(p==='approved'||S.filed){pct=100;col='#0ca678';label=S.filed?'Filed':'Approved'}
+ else if(p==='denied'){pct=100;col='#e03131';label='Denied'}
+ else if(p==='submitted'){pct=75;col='#228be6';label='Submitted · awaiting payer response'}
+ else if(iss.length){pct=35;col='#f76707';label=`${iss.length} blocker${iss.length>1?'s':''} before submission`}
+ else{pct=50;col='#0ca678';label='Ready to submit'}
+ return `<div class="pbar" data-e="pbar" data-a="toggle" data-v="progOpen"><div class="pbar-t"><span>${label}</span><span class="m">${pct}%</span></div><div class="pbar-tr"><i style="width:${pct}%;background:${col}"></i></div></div>`;
+}
 
 render();startIngest();
 </script>
